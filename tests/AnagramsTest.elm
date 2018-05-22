@@ -50,5 +50,26 @@ suite =
                     (Anagrams.build_anagram_dict []) |>
                     Anagrams.retrieve_anagrams "rat" |>
                     Expect.equal Set.empty
+            , test "should retrieve word added" <|
+                \_ ->
+                    (Anagrams.build_anagram_dict ["rat"]) |>
+                    Anagrams.retrieve_anagrams "rat" |>
+                    Expect.equal (Set.singleton "rat")
+            , test "should not retrieve word added for different request" <|
+                \_ ->
+                    (Anagrams.build_anagram_dict ["rat"]) |>
+                    Anagrams.retrieve_anagrams "other" |>
+                    Expect.equal Set.empty
+            , test "should  retrieve word added by anagram" <|
+                \_ ->
+                    (Anagrams.build_anagram_dict ["rat"]) |>
+                    Anagrams.retrieve_anagrams "art" |>
+                    Expect.equal (Set.singleton "rat")
+            , test "should  retrieve multiple anagrams" <|
+                \_ ->
+                    (Anagrams.build_anagram_dict ["rat", "art"]) |>
+                    Anagrams.retrieve_anagrams "art" |>
+                    Set.toList |>
+                    Expect.equal ["art", "rat"]
             ]
         ]

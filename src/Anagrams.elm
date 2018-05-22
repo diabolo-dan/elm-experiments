@@ -2,6 +2,7 @@ module Anagrams exposing (..)
 
 import Set exposing (Set)
 import Dict exposing (Dict)
+import Maybe exposing (Maybe)
 
 type AnagramDict = Anagrams (Dict String (Set String))
 
@@ -25,7 +26,19 @@ filter_anagrams word1 word2 =
   anagram_key word1 == anagram_key word2
 
 build_anagram_dict : List String -> AnagramDict
-build_anagram_dict word_list = Anagrams Dict.empty
+build_anagram_dict word_list =
+    List.foldl add_word (Anagrams Dict.empty) word_list
+
+add_word : String -> AnagramDict -> AnagramDict
+add_word word (Anagrams anagram_dict) =
+    retrieve_anagrams word (Anagrams anagram_dict) |>
+    Set.insert word |>
+    \set ->
+        Dict.insert (anagram_key word) set anagram_dict |>
+    Anagrams
+
 
 retrieve_anagrams : String -> AnagramDict -> Set String
-retrieve_anagrams  request anagram_dict = Set.empty
+retrieve_anagrams  request (Anagrams anagram_dict) =
+    Dict.get (anagram_key request) anagram_dict |>
+    Maybe.withDefault Set.empty
