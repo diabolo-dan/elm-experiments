@@ -26,7 +26,7 @@ suite =
             , test "should return all anagrams" <|
               \_ ->
                     Anagrams.anagrams ["evil", "vile", "live", "veil", "good", "gut", "word", "anagram"] "evil" |>
-                    Expect.equal ["evil", "vile", "live", "veil"]
+                    Expect.equal ["evil", "live", "veil", "vile"]
             , test "should ignore case"  <|
               \_ ->
                     Anagrams.anagrams ["Rat", "Tar"] "Art" |>
@@ -35,5 +35,9 @@ suite =
               \_ ->
                     Anagrams.anagrams ["rat ", "tar\n"] "art" |>
                     Expect.equal ["rat", "tar"]
+            , test "should ignore duplicates"  <|
+              \_ ->
+                    Anagrams.anagrams ["rat ", "rat", "rat"] "art" |>
+                    Expect.equal ["rat"]
             ]
 

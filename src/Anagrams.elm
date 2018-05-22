@@ -1,10 +1,13 @@
 module Anagrams exposing (..)
+import Set exposing (Set)
 
 anagrams : List String -> String -> List String
 anagrams wordlist word =
     wordlist |>
     List.map String.trim |>
-    List.filter (filter_anagrams word)
+    List.filter (filter_anagrams word) |>
+    Set.fromList |>
+    Set.toList
 
 anagram_key : String -> String
 anagram_key word =
