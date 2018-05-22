@@ -3,11 +3,14 @@ module AnagramsTest exposing (..)
 import Expect exposing (Expectation)
 import Test exposing (..)
 
+import Dict exposing (Dict)
+
 import Anagrams
 
 suite : Test
 suite =
     describe "Anagrams"
+        [ describe "anagram function"
             [ test "should return empty list of anagrams when given the empty string" <|
                 \_ ->
                     Expect.equal (Anagrams.anagrams [] "" ) []
@@ -40,4 +43,10 @@ suite =
                     Anagrams.anagrams ["rat ", "rat", "rat"] "art" |>
                     Expect.equal ["rat"]
             ]
-
+        , describe "angram dict builder"
+            [ test "should produce dict" <|
+                \_ ->
+                    Anagrams.build_anagram_dict [] |>
+                    Expect.equal Dict.empty
+            ]
+        ]
