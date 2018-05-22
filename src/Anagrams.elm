@@ -10,8 +10,8 @@ anagrams : List String -> String -> List String
 anagrams word_list word =
     word_list |>
     List.map String.trim |>
-    List.filter (filter_anagrams word) |>
-    Set.fromList |>
+    build_anagram_dict |>
+    retrieve_anagrams word |>
     Set.toList
 
 anagram_key : String -> String
