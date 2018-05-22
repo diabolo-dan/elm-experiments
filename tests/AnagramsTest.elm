@@ -4,6 +4,7 @@ import Expect exposing (Expectation)
 import Test exposing (..)
 
 import Dict exposing (Dict)
+import Set exposing (Set)
 
 import Anagrams
 
@@ -44,9 +45,10 @@ suite =
                     Expect.equal ["rat"]
             ]
         , describe "angram dict builder"
-            [ test "should produce dict" <|
+            [ test "should produce no result" <|
                 \_ ->
-                    Anagrams.build_anagram_dict [] |>
-                    Expect.equal Dict.empty
+                    (Anagrams.build_anagram_dict []) |>
+                    Anagrams.retrieve_anagrams "rat" |>
+                    Expect.equal Set.empty
             ]
         ]
