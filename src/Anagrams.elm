@@ -9,14 +9,15 @@ type AnagramDict = Anagrams (Dict String (Set String))
 anagrams : List String -> String -> List String
 anagrams word_list word =
     word_list |>
-    List.map String.trim |>
     build_anagram_dict |>
     retrieve_anagrams word |>
     Set.toList
 
 anagram_key : String -> String
 anagram_key word =
-    String.toLower word |>
+    word |>
+    String.trim |>
+    String.toLower |>
     String.toList |>
     List.sort |>
     String.fromList
@@ -32,7 +33,7 @@ build_anagram_dict word_list =
 add_word : String -> AnagramDict -> AnagramDict
 add_word word (Anagrams anagram_dict) =
     retrieve_anagrams word (Anagrams anagram_dict) |>
-    Set.insert word |>
+    Set.insert (String.trim word) |>
     \set ->
         Dict.insert (anagram_key word) set anagram_dict |>
     Anagrams

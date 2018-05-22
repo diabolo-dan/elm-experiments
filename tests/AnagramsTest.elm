@@ -71,5 +71,11 @@ suite =
                     Anagrams.retrieve_anagrams "art" |>
                     Set.toList |>
                     Expect.equal ["art", "rat"]
+            , test "should  ignore whitespace and case" <|
+                \_ ->
+                    (Anagrams.build_anagram_dict ["Rat", "Tar\n", "art ", "other"]) |>
+                    Anagrams.retrieve_anagrams "art" |>
+                    Set.toList |>
+                    Expect.equal ["Rat", "Tar", "art"]
             ]
         ]
