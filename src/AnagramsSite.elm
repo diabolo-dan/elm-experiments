@@ -33,13 +33,13 @@ type Msg
 
 update : Msg -> Model -> Model
 update msg model =
+  update_anagrams <|
   case msg of
     Change new_word ->
       { model | word = new_word}
     AddWord word ->
       { model | word_list = word :: model.word_list }
-  |>  update_anagrams
-  
+
 update_anagrams : Model -> Model
 update_anagrams model =
     {model | anagrams = anagrams model.word_list model.word }

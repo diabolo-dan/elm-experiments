@@ -5,6 +5,12 @@ import Test exposing (..)
 
 import AnagramsSite exposing (..)
 
+test_model : Model
+test_model =
+    model |>
+    update (AddWord "rat") |>
+    update (AddWord "art")
+
 suite : Test
 suite =
     describe "Anagrams Site"
@@ -35,5 +41,23 @@ suite =
                     update (AddWord "word") |>
                     .word_list |>
                     Expect.equal ["word"]
+            , test "should have no anagrams for no word" <|
+                \_ ->
+                    test_model |>
+                    .anagrams |>
+                    Expect.equal []
+            , test "should update anagrams on word change" <|
+                \_ ->
+                    test_model |>
+                    update (Change "art") |>
+                    .anagrams |>
+                    Expect.equal ["art", "rat"]
+            , test "should update anagrams on word addition" <|
+                \_ ->
+                    test_model |>
+                    update (Change "art") |>
+                    update (AddWord "tar") |>
+                    .anagrams |>
+                    Expect.equal ["art", "rat", "tar"]
             ]
         ]
